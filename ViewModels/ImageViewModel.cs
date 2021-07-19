@@ -63,11 +63,11 @@ namespace ImageGrabber.ViewModels
 
         public ICommand LoadPreviousImgCommand { get; }
 
-        public DelegateCommand<object> RandomCommand { get; } // No utilized - functionality moved LoadRandomImageCommand
+        public DelegateCommand<object> RandomCommand { get; } // Not utilized - functionality moved LoadRandomImageCommand
 
-        public DelegateCommand<object> LoadNextImageCommand { get; } // No utilized - functionality moved LoadRandomImageCommand
+        public DelegateCommand<object> LoadNextImageCommand { get; } // Not utilized - functionality moved LoadRandomImageCommand
 
-        public DelegateCommand<object> LoadPreviousImageCommand { get; } // No utilized - functionality moved LoadRandomImageCommand
+        public DelegateCommand<object> LoadPreviousImageCommand { get; } // Not utilized - functionality moved LoadRandomImageCommand
 
         public ImageViewModel(ImageStore imageStore, INavigationService homeNavigationService)
         {
