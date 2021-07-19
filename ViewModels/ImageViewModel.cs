@@ -56,21 +56,31 @@ namespace ImageGrabber.ViewModels
 
         public ICommand NavigateHomeCommand { get; }
         public ICommand LoadImageCommand { get; }      
-        //public ICommand LoadRandomImageCommand { get; } // Not Fully Implemented Yet!        
-        public DelegateCommand<object> RandomCommand { get; }
+        
+        public ICommand LoadRandomImageCommand { get; }
 
-        public DelegateCommand<object> LoadNextImageCommand { get; }
+        public ICommand LoadNextImgCommand { get; }
 
-        public DelegateCommand<object> LoadPreviousImageCommand { get; }
+        public ICommand LoadPreviousImgCommand { get; }
+
+        public DelegateCommand<object> RandomCommand { get; } // No utilized - functionality moved LoadRandomImageCommand
+
+        public DelegateCommand<object> LoadNextImageCommand { get; } // No utilized - functionality moved LoadRandomImageCommand
+
+        public DelegateCommand<object> LoadPreviousImageCommand { get; } // No utilized - functionality moved LoadRandomImageCommand
 
         public ImageViewModel(ImageStore imageStore, INavigationService homeNavigationService)
         {
             _imageStore = imageStore;
             _imageStore.CurrentImageChanged += OnCurrentImageChanged;
 
-            NavigateHomeCommand = new NavigateCommand(homeNavigationService);            
+            NavigateHomeCommand = new NavigateCommand(homeNavigationService);
             LoadImageCommand = new LoadImageCommand(_imageStore, this);
-            //LoadRandomImageCommand = new LoadRandomImageCommand(_imageStore);
+            LoadRandomImageCommand = new LoadRandomImageCommand(_imageStore, this);
+            LoadNextImgCommand = new LoadNextImgCommand(_imageStore, this);
+            LoadPreviousImgCommand = new LoadPreviousImgCommand(_imageStore, this);
+
+            // Not using Delegation any more
             RandomCommand = new DelegateCommand<object>(RandomCommand_Execute);
             LoadNextImageCommand = new DelegateCommand<object>(LoadNextImageCommand_Execute);
             LoadPreviousImageCommand = new DelegateCommand<object>(LoadPreviousImageCommand_Execute);
@@ -127,14 +137,10 @@ namespace ImageGrabber.ViewModels
             {
                 int random_number = random.Next(1, 10000);
                 InputId = Convert.ToString(random_number);
-                //LoadImageCommand = new LoadImageCommand(_imageStore, this);
                 await _imageStore.GetImage(int.Parse(InputId));
                 ShowImage = Bitmap != null ? true : false;
                 ShowPicNotAvail = !ShowImage;
-
             }
-            
-            
         }
 
         private void OnCurrentImageChanged()

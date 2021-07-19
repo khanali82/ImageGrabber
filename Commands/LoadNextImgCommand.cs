@@ -7,32 +7,30 @@ using System.Threading.Tasks;
 
 namespace ImageGrabber.Commands
 {
-    class LoadRandomImageCommand : AsyncCommandBase
+    class LoadNextImgCommand : AsyncCommandBase
     {
         private readonly ImageStore _imageStore;
         private ImageViewModel _imageViewModel;
 
-        public LoadRandomImageCommand(ImageStore imageStore, ImageViewModel imageViewModel)
+        public LoadNextImgCommand(ImageStore imageStore, ImageViewModel imageViewModel)
         {
             _imageStore = imageStore;
             _imageViewModel = imageViewModel;
-    }
+        }
 
         protected override async Task ExecuteAsync(object parameter)
         {
             try
             {
-                Random random = new Random();
-                _imageStore.CurrentImage.Bitmap = null;
+                int intInputID = int.Parse(_imageViewModel.InputId);
+                intInputID += 1;
+                _imageViewModel.InputId = intInputID.ToString();
 
-                while (_imageStore.CurrentImage.Bitmap == null)
-                {
-                    int random_number = random.Next(1, 10000);
-                    _imageViewModel.InputId = Convert.ToString(random_number);                    
-                    await _imageStore.GetImage(int.Parse(_imageViewModel.InputId));
-                    _imageViewModel.ShowImage = _imageStore.CurrentImage.Bitmap != null ? true : false;
-                    _imageViewModel.ShowPicNotAvail = !_imageViewModel.ShowImage;
-                }
+                await _imageStore.GetImage(intInputID);
+
+                _imageViewModel.ShowImage = _imageStore.CurrentImage.Bitmap != null ? true : false;
+                _imageViewModel.ShowPicNotAvail = !_imageViewModel.ShowImage;
+
             }
             catch (Exception ex)
             {

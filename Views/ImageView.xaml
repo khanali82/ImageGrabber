@@ -32,7 +32,7 @@
                 VerticalAlignment="Top"
                 Visibility="{Binding ShowImage, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             </Border>
-            <Label x:Name="noImageFound" Content="No Picture Available" Width="82" Height="23"
+            <Label x:Name="noImageFound" Content="No Picture Available" Width="150" Height="23"
                 Visibility="{Binding ShowPicNotAvail, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <Label x:Name="idLabel" Content="ID" Width="82" Height="23"/>
             <TextBox x:Name="InputId" Width="150" Text="{Binding InputId}" Height="23"/>
@@ -59,7 +59,7 @@
             Margin="170,15,0,5"
             Padding="5 2"
             HorizontalAlignment="Left"
-            Command="{Binding LoadNextImageCommand}" Width="64" 
+            Command="{Binding LoadNextImgCommand}" Width="64" 
             Content="Next" Grid.Row="3" />
 
         <Button
@@ -68,7 +68,7 @@
             Margin="87,15,0,5"
             Padding="5 2"
             HorizontalAlignment="Left"
-            Command="{Binding LoadPreviousImageCommand}"             
+            Command="{Binding LoadPreviousImgCommand}"             
             Content="Previous" />
 
         <Button
@@ -77,7 +77,7 @@
             Margin="234,26,0,-6"
             Padding="5 2"
             HorizontalAlignment="Left"
-            Command="{Binding RandomCommand}"             
+            Command="{Binding LoadRandomImageCommand}"             
             Content="Random" />
 
 
